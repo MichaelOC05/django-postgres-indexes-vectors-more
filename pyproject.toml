@@ -12,10 +12,16 @@ dependencies = [
     "psycopg>=3.2.3",
     "whitenoise>=6.8.2",
     "python-dotenv>=1.0.1",
+    "pgvector>=0.4.2",
+    "langchain>=1.2.13",
+    "openai>=2.29.0",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 development = [
+    "pgvector>=0.4.2",
+]
+local = [
     "django-debug-toolbar>=4.4.6",
     "kolo>=2.34.2",
 ]
