@@ -1,0 +1,1 @@
+npx tailwindcss -i ./forkprojectapplication/static/tailwind-input.css -o ./forkprojectapplication/static/tailwind-output.css --watch

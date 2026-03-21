@@ -1,0 +1,1 @@
+After building the docker image because postrges is running as a seperate container I needed to the run the image as docker run --name django-fork-project --link postgres-db:db -p 8000:8000 django-fork-project and set the DATABASE_HOST to db.

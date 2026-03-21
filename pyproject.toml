@@ -1,0 +1,21 @@
+[project]
+name = "django-fork-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django-structlog>=8.1.0",
+    "django>=5.1.3",
+    "django-auditlog>=3.0.0",
+    "psycopg-binary>=3.2.3",
+    "psycopg>=3.2.3",
+    "whitenoise>=6.8.2",
+    "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+development = [
+    "django-debug-toolbar>=4.4.6",
+    "kolo>=2.34.2",
+]

@@ -1,0 +1,35 @@
+{% load static %}
+<!doctype html>
+<html>
+    <head>
+        {% block head_content %}
+        {% endblock head_content %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'tailwind-output.css' %}">
+    </head>
+    {% if debug %}
+    <script>
+    <!-- code for htmx to be included in the django debug panels -->
+        if (typeof window.htmx !== "undefined") {
+            htmx.on("htmx:afterSettle", function(detail) {
+                if (
+                    typeof window.djdt !== "undefined"
+                    && detail.target instanceof HTMLBodyElement
+                ) {
+                    djdt.show_toolbar();
+                }
+            });
+        }
+    </script>
+    {% endif %}
+    <body>
+        {% if user.is_authenticated %}
+            {% include "partials/navbar.html" %}
+        {% endif %}
+        <main {% if user.is_authenticated %}class="mt-12"{% endif %}>
+            {% block main_content %}
+            {% endblock main_content %}
+        </main>
+    </body>
+</html>

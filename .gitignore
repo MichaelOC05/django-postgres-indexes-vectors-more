@@ -1,0 +1,51 @@
+# Python bytecode and cache files
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environment
+.env/
+.venv/
+env/
+venv/
+
+# Environment variables
+*.env
+*.env.*
+
+# Django specific
+db.sqlite3  # Exclude SQLite database file
+*.log       # Log files
+*.pot       # Translation templates
+*.py[cod]
+*.pyo
+*.pyd
+
+# Secret key and settings overrides
+**/local_settings.py
+**/settings_local.py
+
+# Static and media files
+/static/
+media/
+
+# Node.js files (if using npm or yarn for frontend assets)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE/Editor settings
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+
+
+node_modules
+**/staticfiles
