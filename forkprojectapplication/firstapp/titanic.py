@@ -4,9 +4,10 @@ import pandasai as pai
 from pandasai_litellm.litellm import LiteLLM
 
 CLAUDE_API_KEY = os.getenv("CLAUDE_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # from documentation not from tutorial as the package has been updated
-llm = LiteLLM(model="anthropic/claude-sonnet-4-20250514", api_key=CLAUDE_API_KEY)
+llm = LiteLLM(model="gpt-4.1-mini", api_key=OPENAI_API_KEY)
 
 pai.config.set({"llm": llm})
 

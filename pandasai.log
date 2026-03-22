@@ -7176,3 +7176,1980 @@ plot_path = 'exports/charts/temp_chart_e655d8bd-b74a-4424-be8d-feab373ac160.png'
 plt.savefig(plot_path, dpi=300, bbox_inches='tight')
 plt.close()
 result = {'type': 'plot', 'value': plot_path}
+2026-03-22 13:13:47 [INFO] Retrying execution (2/3)...
+2026-03-22 13:13:47 [INFO] Execution failed with error: Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 24, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/temp_chart_e655d8bd-b74a-4424-be8d-feab373ac160.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+2026-03-22 13:13:47 [INFO] Using Prompt: <table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+The user asked the following question:
+### QUERY
+ Create a histogram plot based on the fare values
+
+You generated the following Python code:
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+sql_query = """
+SELECT Fare
+FROM table_titanic_data 
+WHERE Fare IS NOT NULL
+ORDER BY Fare
+"""
+fare_data = execute_sql_query(sql_query)
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.hist(fare_data['Fare'], bins=30, color='skyblue', alpha=0.7, edgecolor='black')
+ax.set_xlabel('Fare ($)')
+ax.set_ylabel('Frequency')
+ax.set_title('Distribution of Titanic Passenger Fares')
+ax.grid(True, alpha=0.3)
+mean_fare = fare_data['Fare'].mean()
+median_fare = fare_data['Fare'].median()
+ax.axvline(mean_fare, color='red', linestyle='--', linewidth=2, label=f'Mean: ${mean_fare:.2f}')
+ax.axvline(median_fare, color='orange', linestyle='--', linewidth=2, label=f'Median: ${median_fare:.2f}')
+ax.legend()
+plt.tight_layout()
+plot_path = 'exports/charts/temp_chart_e655d8bd-b74a-4424-be8d-feab373ac160.png'
+plt.savefig(plot_path, dpi=300, bbox_inches='tight')
+plt.close()
+result = {'type': 'plot', 'value': plot_path}
+
+However, it resulted in the following error:
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 24, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/temp_chart_e655d8bd-b74a-4424-be8d-feab373ac160.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+
+Fix the python code above and return the new python code but the code generated should use execute_sql_query function
+2026-03-22 13:13:52 [INFO] Code Generated:
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Get fare data from the database
+sql_query = """
+SELECT Fare
+FROM table_titanic_data 
+WHERE Fare IS NOT NULL
+ORDER BY Fare
+"""
+
+fare_data = execute_sql_query(sql_query)
+
+# Create the histogram plot
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.hist(fare_data['Fare'], bins=30, color='skyblue', alpha=0.7, edgecolor='black')
+
+# Add labels and title
+ax.set_xlabel('Fare ($)')
+ax.set_ylabel('Frequency')
+ax.set_title('Distribution of Titanic Passenger Fares')
+ax.grid(True, alpha=0.3)
+
+# Add statistical lines
+mean_fare = fare_data['Fare'].mean()
+median_fare = fare_data['Fare'].median()
+ax.axvline(mean_fare, color='red', linestyle='--', linewidth=2, label=f'Mean: ${mean_fare:.2f}')
+ax.axvline(median_fare, color='orange', linestyle='--', linewidth=2, label=f'Median: ${median_fare:.2f}')
+
+# Add legend
+ax.legend()
+
+# Adjust layout and display
+plt.tight_layout()
+plt.show()
+2026-03-22 13:13:52 [INFO] Validating code requirements...
+2026-03-22 13:13:52 [INFO] Code validation successful.
+2026-03-22 13:13:52 [INFO] Cleaning the generated code...
+2026-03-22 13:13:52 [INFO] Executing code: import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+sql_query = """
+SELECT Fare
+FROM table_titanic_data 
+WHERE Fare IS NOT NULL
+ORDER BY Fare
+"""
+fare_data = execute_sql_query(sql_query)
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.hist(fare_data['Fare'], bins=30, color='skyblue', alpha=0.7, edgecolor='black')
+ax.set_xlabel('Fare ($)')
+ax.set_ylabel('Frequency')
+ax.set_title('Distribution of Titanic Passenger Fares')
+ax.grid(True, alpha=0.3)
+mean_fare = fare_data['Fare'].mean()
+median_fare = fare_data['Fare'].median()
+ax.axvline(mean_fare, color='red', linestyle='--', linewidth=2, label=f'Mean: ${mean_fare:.2f}')
+ax.axvline(median_fare, color='orange', linestyle='--', linewidth=2, label=f'Median: ${median_fare:.2f}')
+ax.legend()
+plt.tight_layout()
+2026-03-22 13:13:53 [INFO] Retrying execution (3/3)...
+2026-03-22 13:13:53 [INFO] Execution failed with error: Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 42, in execute_and_return_result
+    raise NoResultFoundError(
+pandasai.exceptions.NoResultFoundError: No result was returned from the code execution. Please return the result in dictionary format, for example: result = {'type': ..., 'value': ...}
+
+2026-03-22 13:13:53 [INFO] Using Prompt: <table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+The user asked the following question:
+### QUERY
+ Create a histogram plot based on the fare values
+
+You generated the following Python code:
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+sql_query = """
+SELECT Fare
+FROM table_titanic_data 
+WHERE Fare IS NOT NULL
+ORDER BY Fare
+"""
+fare_data = execute_sql_query(sql_query)
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.hist(fare_data['Fare'], bins=30, color='skyblue', alpha=0.7, edgecolor='black')
+ax.set_xlabel('Fare ($)')
+ax.set_ylabel('Frequency')
+ax.set_title('Distribution of Titanic Passenger Fares')
+ax.grid(True, alpha=0.3)
+mean_fare = fare_data['Fare'].mean()
+median_fare = fare_data['Fare'].median()
+ax.axvline(mean_fare, color='red', linestyle='--', linewidth=2, label=f'Mean: ${mean_fare:.2f}')
+ax.axvline(median_fare, color='orange', linestyle='--', linewidth=2, label=f'Median: ${median_fare:.2f}')
+ax.legend()
+plt.tight_layout()
+
+However, it resulted in the following error:
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 42, in execute_and_return_result
+    raise NoResultFoundError(
+pandasai.exceptions.NoResultFoundError: No result was returned from the code execution. Please return the result in dictionary format, for example: result = {'type': ..., 'value': ...}
+
+
+Fix the python code above and return the new python code but the code generated should use execute_sql_query function
+2026-03-22 13:13:58 [INFO] Code Generated:
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+sql_query = """
+SELECT Fare
+FROM table_titanic_data 
+WHERE Fare IS NOT NULL
+ORDER BY Fare
+"""
+
+fare_data = execute_sql_query(sql_query)
+
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.hist(fare_data['Fare'], bins=30, color='skyblue', alpha=0.7, edgecolor='black')
+ax.set_xlabel('Fare ($)')
+ax.set_ylabel('Frequency')
+ax.set_title('Distribution of Titanic Passenger Fares')
+ax.grid(True, alpha=0.3)
+
+mean_fare = fare_data['Fare'].mean()
+median_fare = fare_data['Fare'].median()
+ax.axvline(mean_fare, color='red', linestyle='--', linewidth=2, label=f'Mean: ${mean_fare:.2f}')
+ax.axvline(median_fare, color='orange', linestyle='--', linewidth=2, label=f'Median: ${median_fare:.2f}')
+ax.legend()
+plt.tight_layout()
+plt.show()
+
+result = {
+    'type': 'plot',
+    'value': f'Histogram of Titanic passenger fares created successfully. The distribution shows fare values ranging from ${fare_data["Fare"].min():.2f} to ${fare_data["Fare"].max():.2f}, with mean fare of ${mean_fare:.2f} and median fare of ${median_fare:.2f}.'
+}
+2026-03-22 13:13:58 [INFO] Validating code requirements...
+2026-03-22 13:13:58 [INFO] Code validation successful.
+2026-03-22 13:13:58 [INFO] Cleaning the generated code...
+2026-03-22 13:13:58 [INFO] Executing code: import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+sql_query = """
+SELECT Fare
+FROM table_titanic_data 
+WHERE Fare IS NOT NULL
+ORDER BY Fare
+"""
+fare_data = execute_sql_query(sql_query)
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.hist(fare_data['Fare'], bins=30, color='skyblue', alpha=0.7, edgecolor='black')
+ax.set_xlabel('Fare ($)')
+ax.set_ylabel('Frequency')
+ax.set_title('Distribution of Titanic Passenger Fares')
+ax.grid(True, alpha=0.3)
+mean_fare = fare_data['Fare'].mean()
+median_fare = fare_data['Fare'].median()
+ax.axvline(mean_fare, color='red', linestyle='--', linewidth=2, label=f'Mean: ${mean_fare:.2f}')
+ax.axvline(median_fare, color='orange', linestyle='--', linewidth=2, label=f'Median: ${median_fare:.2f}')
+ax.legend()
+plt.tight_layout()
+result = {'type': 'plot', 'value': f"Histogram of Titanic passenger fares created successfully. The distribution shows fare values ranging from ${fare_data['Fare'].min():.2f} to ${fare_data['Fare'].max():.2f}, with mean fare of ${mean_fare:.2f} and median fare of ${median_fare:.2f}."}
+2026-03-22 13:13:58 [INFO] Max retries reached. Error: Invalid output: Expected a plot save path str but received an incompatible type.
+2026-03-22 13:23:28 [INFO] Question: What sex was most likely to have survived?
+2026-03-22 13:23:28 [INFO] Running PandasAI with litellm LLM...
+2026-03-22 13:23:28 [INFO] Prompt ID: 3a10d445-cdb5-4507-bdd0-9d75f975d6f1
+2026-03-22 13:23:28 [INFO] Generating new code...
+2026-03-22 13:23:28 [INFO] Using Prompt: <tables>
+
+<table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+</tables>
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ What sex was most likely to have survived?
+
+At the end, declare "result" variable as a dictionary of type and value in the following format:
+
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+
+
+Generate python code and return full updated code:
+
+### Note: Use only relevant table for query and do aggregation, sorting, joins and grouby through sql query
+2026-03-22 13:23:37 [INFO] Code Generated:
+# TODO: import the required dependencies
+import pandas as pd
+
+# SQL query to calculate survival rate by sex
+sql_query = """
+SELECT 
+    Sex, 
+    AVG(Survived) AS survival_rate,
+    COUNT(*) AS total_passengers,
+    SUM(Survived) AS survivors
+FROM table_titanic_data
+GROUP BY Sex
+ORDER BY survival_rate DESC
+LIMIT 1
+"""
+
+# Execute query
+df = execute_sql_query(sql_query)
+
+# Extract the sex with highest survival rate
+most_likely_sex = df.iloc[0]['Sex']
+survival_rate = df.iloc[0]['survival_rate']
+
+result = {
+    "type": "string",
+    "value": f"The sex most likely to have survived is '{most_likely_sex}' with a survival rate of {survival_rate:.2f}."
+}
+2026-03-22 13:23:37 [INFO] Validating code requirements...
+2026-03-22 13:23:37 [INFO] Code validation successful.
+2026-03-22 13:23:37 [INFO] Cleaning the generated code...
+2026-03-22 13:23:37 [INFO] Executing code: import pandas as pd
+sql_query = """
+SELECT 
+    Sex, 
+    AVG(Survived) AS survival_rate,
+    COUNT(*) AS total_passengers,
+    SUM(Survived) AS survivors
+FROM table_titanic_data
+GROUP BY Sex
+ORDER BY survival_rate DESC
+LIMIT 1
+"""
+df = execute_sql_query(sql_query)
+most_likely_sex = df.iloc[0]['Sex']
+survival_rate = df.iloc[0]['survival_rate']
+result = {'type': 'string', 'value': f"The sex most likely to have survived is '{most_likely_sex}' with a survival rate of {survival_rate:.2f}."}
+2026-03-22 13:23:38 [INFO] Response generated successfully.
+2026-03-22 13:23:38 [INFO] Question: What can you tell us about the class of the passenger - is there a correlation wiht survival rate?
+2026-03-22 13:23:38 [INFO] Running PandasAI with litellm LLM...
+2026-03-22 13:23:38 [INFO] Prompt ID: 05b7e24a-1ab7-4ab0-aec0-24dac3d37aa1
+2026-03-22 13:23:38 [INFO] Generating new code...
+2026-03-22 13:23:38 [INFO] Using Prompt: <tables>
+
+<table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+</tables>
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+
+Last code generated:
+import pandas as pd
+sql_query = """
+SELECT 
+    Sex, 
+    AVG(Survived) AS survival_rate,
+    COUNT(*) AS total_passengers,
+    SUM(Survived) AS survivors
+FROM table_titanic_data
+GROUP BY Sex
+ORDER BY survival_rate DESC
+LIMIT 1
+"""
+df = execute_sql_query(sql_query)
+most_likely_sex = df.iloc[0]['Sex']
+survival_rate = df.iloc[0]['survival_rate']
+result = {'type': 'string', 'value': f"The sex most likely to have survived is '{most_likely_sex}' with a survival rate of {survival_rate:.2f}."}
+
+
+
+### QUERY
+ What can you tell us about the class of the passenger - is there a correlation wiht survival rate?
+
+At the end, declare "result" variable as a dictionary of type and value in the following format:
+
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+
+
+Generate python code and return full updated code:
+
+### Note: Use only relevant table for query and do aggregation, sorting, joins and grouby through sql query
+2026-03-22 13:23:41 [INFO] Code Generated:
+import pandas as pd
+sql_query = """
+SELECT 
+    Pclass, 
+    AVG(Survived) AS survival_rate,
+    COUNT(*) AS total_passengers,
+    SUM(Survived) AS survivors
+FROM table_titanic_data
+GROUP BY Pclass
+ORDER BY survival_rate DESC
+"""
+df = execute_sql_query(sql_query)
+
+# Prepare result interpretation text
+result_text = "Survival rates by passenger class (Pclass):\n"
+for _, row in df.iterrows():
+    result_text += f"Class {int(row['Pclass'])}: survival rate = {row['survival_rate']:.2f} with {int(row['survivors'])} survivors out of {int(row['total_passengers'])} passengers.\n"
+
+result = { "type": "string", "value": result_text.strip() }
+2026-03-22 13:23:41 [INFO] Validating code requirements...
+2026-03-22 13:23:41 [INFO] Code validation successful.
+2026-03-22 13:23:41 [INFO] Cleaning the generated code...
+2026-03-22 13:23:41 [INFO] Executing code: import pandas as pd
+sql_query = """
+SELECT 
+    Pclass, 
+    AVG(Survived) AS survival_rate,
+    COUNT(*) AS total_passengers,
+    SUM(Survived) AS survivors
+FROM table_titanic_data
+GROUP BY Pclass
+ORDER BY survival_rate DESC
+"""
+df = execute_sql_query(sql_query)
+result_text = 'Survival rates by passenger class (Pclass):\n'
+for _, row in df.iterrows():
+    result_text += f"""Class {int(row['Pclass'])}: survival rate = {row['survival_rate']:.2f} with {int(row['survivors'])} survivors out of {int(row['total_passengers'])} passengers.
+"""
+result = {'type': 'string', 'value': result_text.strip()}
+2026-03-22 13:23:41 [INFO] Response generated successfully.
+2026-03-22 13:23:41 [INFO] Question: Plot the histogram of survivorship of the sexes
+2026-03-22 13:23:41 [INFO] Running PandasAI with litellm LLM...
+2026-03-22 13:23:41 [INFO] Prompt ID: eea865f9-8675-4ae5-9d6a-bd97109502d6
+2026-03-22 13:23:41 [INFO] Generating new code...
+2026-03-22 13:23:41 [INFO] Using Prompt: <tables>
+
+<table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+</tables>
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+
+Last code generated:
+import pandas as pd
+sql_query = """
+SELECT 
+    Pclass, 
+    AVG(Survived) AS survival_rate,
+    COUNT(*) AS total_passengers,
+    SUM(Survived) AS survivors
+FROM table_titanic_data
+GROUP BY Pclass
+ORDER BY survival_rate DESC
+"""
+df = execute_sql_query(sql_query)
+result_text = 'Survival rates by passenger class (Pclass):\n'
+for _, row in df.iterrows():
+    result_text += f"""Class {int(row['Pclass'])}: survival rate = {row['survival_rate']:.2f} with {int(row['survivors'])} survivors out of {int(row['total_passengers'])} passengers.
+"""
+result = {'type': 'string', 'value': result_text.strip()}
+
+
+
+### QUERY
+ Plot the histogram of survivorship of the sexes
+
+At the end, declare "result" variable as a dictionary of type and value in the following format:
+
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+
+
+Generate python code and return full updated code:
+
+### Note: Use only relevant table for query and do aggregation, sorting, joins and grouby through sql query
+2026-03-22 13:23:44 [INFO] Code Generated:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+
+# Pivot the dataframe for histogram plotting
+pivot_df = df.pivot(index="Sex", columns="Survived", values="count").fillna(0)
+
+# Plot the histogram
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+plt.tight_layout()
+plt.savefig("survivorship_by_sex_histogram.png")
+plt.close()
+
+result = {"type": "plot", "value": "survivorship_by_sex_histogram.png"}
+2026-03-22 13:23:44 [INFO] Validating code requirements...
+2026-03-22 13:23:44 [INFO] Code validation successful.
+2026-03-22 13:23:44 [INFO] Cleaning the generated code...
+2026-03-22 13:23:44 [INFO] Executing code: import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+plt.tight_layout()
+plt.savefig('exports/charts/temp_chart_bef84787-154a-4fe8-909e-3e5374325c95.png')
+plt.close()
+result = {'type': 'plot', 'value': 'exports/charts/temp_chart_bef84787-154a-4fe8-909e-3e5374325c95.png'}
+2026-03-22 13:23:44 [INFO] Retrying execution (1/3)...
+2026-03-22 13:23:44 [INFO] Execution failed with error: Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 20, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/temp_chart_bef84787-154a-4fe8-909e-3e5374325c95.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+2026-03-22 13:23:44 [INFO] Using Prompt: <table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+The user asked the following question:
+### QUERY
+ Plot the histogram of survivorship of the sexes
+
+You generated the following Python code:
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+plt.tight_layout()
+plt.savefig('exports/charts/temp_chart_bef84787-154a-4fe8-909e-3e5374325c95.png')
+plt.close()
+result = {'type': 'plot', 'value': 'exports/charts/temp_chart_bef84787-154a-4fe8-909e-3e5374325c95.png'}
+
+However, it resulted in the following error:
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 20, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/temp_chart_bef84787-154a-4fe8-909e-3e5374325c95.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+
+Fix the python code above and return the new python code but the code generated should use execute_sql_query function
+2026-03-22 13:23:48 [INFO] Code Generated:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+
+plt.tight_layout()
+
+# Create directory if it doesn't exist to avoid FileNotFoundError
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'temp_chart_bef84787-154a-4fe8-909e-3e5374325c95.png')
+
+plt.savefig(output_path)
+plt.close()
+
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:23:48 [INFO] Validating code requirements...
+2026-03-22 13:23:48 [INFO] Code validation successful.
+2026-03-22 13:23:48 [INFO] Cleaning the generated code...
+2026-03-22 13:23:48 [INFO] Executing code: import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_e9297db1-10de-4a11-8df1-2a05a7c9dc1e.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:23:48 [INFO] Retrying execution (2/3)...
+2026-03-22 13:23:48 [INFO] Execution failed with error: Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 24, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_e9297db1-10de-4a11-8df1-2a05a7c9dc1e.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+2026-03-22 13:23:48 [INFO] Using Prompt: <table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+The user asked the following question:
+### QUERY
+ Plot the histogram of survivorship of the sexes
+
+You generated the following Python code:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_e9297db1-10de-4a11-8df1-2a05a7c9dc1e.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+
+However, it resulted in the following error:
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 24, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_e9297db1-10de-4a11-8df1-2a05a7c9dc1e.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+
+Fix the python code above and return the new python code but the code generated should use execute_sql_query function
+2026-03-22 13:23:54 [INFO] Code Generated:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+
+df = execute_sql_query(sql_query)
+
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+
+plt.tight_layout()
+
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+
+# Save the figure only once to avoid duplicated path segments
+output_path = os.path.join(output_dir, 'temp_chart_e9297db1-10de-4a11-8df1-2a05a7c9dc1e.png')
+plt.savefig(output_path)
+plt.close()
+
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:23:54 [INFO] Validating code requirements...
+2026-03-22 13:23:54 [INFO] Code validation successful.
+2026-03-22 13:23:54 [INFO] Cleaning the generated code...
+2026-03-22 13:23:54 [INFO] Executing code: import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_604969a5-7f3b-4a81-9bdc-330d7e23b2b4.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:23:54 [INFO] Retrying execution (3/3)...
+2026-03-22 13:23:54 [INFO] Execution failed with error: Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 24, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_604969a5-7f3b-4a81-9bdc-330d7e23b2b4.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+2026-03-22 13:23:54 [INFO] Using Prompt: <table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+The user asked the following question:
+### QUERY
+ Plot the histogram of survivorship of the sexes
+
+You generated the following Python code:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_604969a5-7f3b-4a81-9bdc-330d7e23b2b4.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+
+However, it resulted in the following error:
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 24, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_604969a5-7f3b-4a81-9bdc-330d7e23b2b4.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+
+Fix the python code above and return the new python code but the code generated should use execute_sql_query function
+2026-03-22 13:23:58 [INFO] Code Generated:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+
+plt.tight_layout()
+
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+
+output_path = os.path.join(output_dir, 'temp_chart_604969a5-7f3b-4a81-9bdc-330d7e23b2b4.png')
+plt.savefig(output_path)
+plt.close()
+
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:23:58 [INFO] Validating code requirements...
+2026-03-22 13:23:58 [INFO] Code validation successful.
+2026-03-22 13:23:58 [INFO] Cleaning the generated code...
+2026-03-22 13:23:58 [INFO] Executing code: import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_bf0c3f6a-c3eb-47f8-8a83-182d853a14ae.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:23:58 [INFO] Max retries reached. Error: Code execution failed
+2026-03-22 13:23:58 [INFO] Processing failed with error: Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 24, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_bf0c3f6a-c3eb-47f8-8a83-182d853a14ae.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 287, in _process_query
+    result = self.execute_with_retries(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+2026-03-22 13:23:58 [INFO] Question: Create a histogram plot based on the fare values
+2026-03-22 13:23:58 [INFO] Running PandasAI with litellm LLM...
+2026-03-22 13:23:58 [INFO] Prompt ID: 84e0b9ee-aaba-464c-a9b9-5c3c4e3adbca
+2026-03-22 13:23:58 [INFO] Generating new code...
+2026-03-22 13:23:58 [INFO] Using Prompt: <tables>
+
+<table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+</tables>
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+
+Last code generated:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT 
+    Sex,
+    Survived,
+    COUNT(*) AS count
+FROM table_titanic_data
+GROUP BY Sex, Survived
+ORDER BY Sex, Survived
+"""
+df = execute_sql_query(sql_query)
+pivot_df = df.pivot(index='Sex', columns='Survived', values='count').fillna(0)
+ax = pivot_df.plot(kind='bar', stacked=False)
+ax.set_xlabel('Sex')
+ax.set_ylabel('Number of Passengers')
+ax.set_title('Histogram of Survivorship by Sex')
+ax.legend(['Did not survive', 'Survived'])
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_bf0c3f6a-c3eb-47f8-8a83-182d853a14ae.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+
+
+
+### QUERY
+ Create a histogram plot based on the fare values
+
+At the end, declare "result" variable as a dictionary of type and value in the following format:
+
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+
+
+Generate python code and return full updated code:
+
+### Note: Use only relevant table for query and do aggregation, sorting, joins and grouby through sql query
+2026-03-22 13:24:02 [INFO] Code Generated:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# SQL query to get Fare values
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+
+df = execute_sql_query(sql_query)
+
+# Plot histogram of Fare values
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+plt.tight_layout()
+
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_bf0c3f6a-c3eb-47f8-8a83-182d853a14ae_fare_histogram.png')
+plt.savefig(output_path)
+plt.close()
+
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:24:02 [INFO] Validating code requirements...
+2026-03-22 13:24:02 [INFO] Code validation successful.
+2026-03-22 13:24:02 [INFO] Cleaning the generated code...
+2026-03-22 13:24:02 [INFO] Executing code: import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+df = execute_sql_query(sql_query)
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_287d79e1-8b5a-4f2a-bfbd-825e76fee2a4.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:24:02 [INFO] Retrying execution (1/3)...
+2026-03-22 13:24:02 [INFO] Execution failed with error: Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 18, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_287d79e1-8b5a-4f2a-bfbd-825e76fee2a4.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+2026-03-22 13:24:02 [INFO] Using Prompt: <table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+The user asked the following question:
+### QUERY
+ Create a histogram plot based on the fare values
+
+You generated the following Python code:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+df = execute_sql_query(sql_query)
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_287d79e1-8b5a-4f2a-bfbd-825e76fee2a4.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+
+However, it resulted in the following error:
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 18, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_287d79e1-8b5a-4f2a-bfbd-825e76fee2a4.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+
+Fix the python code above and return the new python code but the code generated should use execute_sql_query function
+2026-03-22 13:24:05 [INFO] Code Generated:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+
+df = execute_sql_query(sql_query)
+
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+
+plt.tight_layout()
+
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+
+output_path = os.path.join(output_dir, 'temp_chart_287d79e1-8b5a-4f2a-bfbd-825e76fee2a4.png')
+plt.savefig(output_path)
+plt.close()
+
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:24:05 [INFO] Validating code requirements...
+2026-03-22 13:24:05 [INFO] Code validation successful.
+2026-03-22 13:24:05 [INFO] Cleaning the generated code...
+2026-03-22 13:24:05 [INFO] Executing code: import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+df = execute_sql_query(sql_query)
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_29b7938d-3e47-4836-8266-7dec36fd51b4.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:24:05 [INFO] Retrying execution (2/3)...
+2026-03-22 13:24:05 [INFO] Execution failed with error: Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 18, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_29b7938d-3e47-4836-8266-7dec36fd51b4.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+2026-03-22 13:24:05 [INFO] Using Prompt: <table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+The user asked the following question:
+### QUERY
+ Create a histogram plot based on the fare values
+
+You generated the following Python code:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+df = execute_sql_query(sql_query)
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_29b7938d-3e47-4836-8266-7dec36fd51b4.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+
+However, it resulted in the following error:
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 18, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_29b7938d-3e47-4836-8266-7dec36fd51b4.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+
+Fix the python code above and return the new python code but the code generated should use execute_sql_query function
+2026-03-22 13:24:08 [INFO] Code Generated:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+df = execute_sql_query(sql_query)
+
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+plt.tight_layout()
+
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+
+output_path = os.path.join(output_dir, 'temp_chart_29b7938d-3e47-4836-8266-7dec36fd51b4.png')
+plt.savefig(output_path)
+plt.close()
+
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:24:08 [INFO] Validating code requirements...
+2026-03-22 13:24:08 [INFO] Code validation successful.
+2026-03-22 13:24:08 [INFO] Cleaning the generated code...
+2026-03-22 13:24:08 [INFO] Executing code: import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+df = execute_sql_query(sql_query)
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_ba3e7082-9e6c-441d-b5b0-971c30a1e4b5.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:24:08 [INFO] Retrying execution (3/3)...
+2026-03-22 13:24:08 [INFO] Execution failed with error: Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 18, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_ba3e7082-9e6c-441d-b5b0-971c30a1e4b5.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+2026-03-22 13:24:08 [INFO] Using Prompt: <table dialect="duckdb" table_name="table_titanic_data" columns="[{"name": "PassengerId", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Survived", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Pclass", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Name", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Sex", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Age", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "SibSp", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Parch", "type": "integer", "description": null, "expression": null, "alias": null}, {"name": "Ticket", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Fare", "type": "float", "description": null, "expression": null, "alias": null}, {"name": "Cabin", "type": "string", "description": null, "expression": null, "alias": null}, {"name": "Embarked", "type": "string", "description": null, "expression": null, "alias": null}]" dimensions="891x12">
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+1,0,3,"Braund, Mr. Owen Harris",male,22.0,1,0,A/5 21171,7.25,,S
+2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38.0,1,0,PC 17599,71.2833,C85,C
+3,1,3,"Heikkinen, Miss. Laina",female,26.0,0,0,STON/O2. 3101282,7.925,,S
+4,1,1,"Futrelle, Mrs. Jacques Heath (Lily May Peel)",female,35.0,1,0,113803,53.1,C123,S
+5,0,3,"Allen, Mr. William Henry",male,35.0,0,0,373450,8.05,,S
+</table>
+
+
+The following functions have already been provided. Please use them as needed and do not redefine them.
+<function>
+def execute_sql_query(sql_query: str) -> pd.DataFrame
+    """This method connects to the database, executes the sql query and returns the dataframe"""
+</function>
+
+
+The user asked the following question:
+### QUERY
+ Create a histogram plot based on the fare values
+
+You generated the following Python code:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+df = execute_sql_query(sql_query)
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_ba3e7082-9e6c-441d-b5b0-971c30a1e4b5.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+
+However, it resulted in the following error:
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 18, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_ba3e7082-9e6c-441d-b5b0-971c30a1e4b5.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
+
+Fix the python code above and return the new python code but the code generated should use execute_sql_query function
+2026-03-22 13:24:10 [INFO] Code Generated:
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+df = execute_sql_query(sql_query)
+
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+plt.tight_layout()
+
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+
+output_path = os.path.join(output_dir, 'temp_chart_ba3e7082-9e6c-441d-b5b0-971c30a1e4b5.png')
+plt.savefig(output_path)
+plt.close()
+
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:24:10 [INFO] Validating code requirements...
+2026-03-22 13:24:10 [INFO] Code validation successful.
+2026-03-22 13:24:10 [INFO] Cleaning the generated code...
+2026-03-22 13:24:10 [INFO] Executing code: import os
+import pandas as pd
+import matplotlib.pyplot as plt
+sql_query = """
+SELECT Fare
+FROM table_titanic_data
+WHERE Fare IS NOT NULL AND Fare > 0
+"""
+df = execute_sql_query(sql_query)
+ax = df['Fare'].plot(kind='hist', bins=30, edgecolor='black')
+ax.set_xlabel('Fare')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Fare Values')
+plt.tight_layout()
+output_dir = 'exports/charts'
+os.makedirs(output_dir, exist_ok=True)
+output_path = os.path.join(output_dir, 'exports/charts/temp_chart_b78d2db1-bc74-4cf3-989b-765ebd73a6a4.png')
+plt.savefig(output_path)
+plt.close()
+result = {'type': 'plot', 'value': output_path}
+2026-03-22 13:24:11 [INFO] Max retries reached. Error: Code execution failed
+2026-03-22 13:24:11 [INFO] Processing failed with error: Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 29, in execute
+    exec(code, self._environment)
+  File "<string>", line 18, in <module>
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/pyplot.py", line 1023, in savefig
+    res = fig.savefig(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2366, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/backends/backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/matplotlib/image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/PIL/Image.py", line 2563, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/michaeloc/projects/django-database-indexes/forkprojectapplication/firstapp/exports/charts/exports/charts/temp_chart_b78d2db1-bc74-4cf3-989b-765ebd73a6a4.png'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 287, in _process_query
+    result = self.execute_with_retries(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 204, in execute_with_retries
+    result = self.execute_code(code)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/agent/base.py", line 135, in execute_code
+    return code_executor.execute_and_return_result(code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 38, in execute_and_return_result
+    self.execute(code)
+  File "/home/michaeloc/projects/django-database-indexes/.venv/lib/python3.11/site-packages/pandasai/core/code_execution/code_executor.py", line 31, in execute
+    raise CodeExecutionError("Code execution failed") from e
+pandasai.exceptions.CodeExecutionError: Code execution failed
+
