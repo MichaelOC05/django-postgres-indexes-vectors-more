@@ -1,0 +1,58 @@
+- vector data is compressed represnstations of data
+  - output is a list of numbers
+  - the input can be any form of data including sound, visuals, or text
+- vector databases connect LLms to your data
+- A few things AI systems can do with Postgres
+  - RAG ()
+    - chatpgt but for company/customer data
+    - customer support chatbot, research copilot
+  - Search
+    - semantic searching rather than keyword (this is the main thing I have heard about pgvector before)
+  - Agents
+    - can take on autonimous tasks such as coding
+- Three main Postgres Extentions for AI
+  - pgvector
+    - give postgresql vector database capabilities
+    - includes a vector data type with distance functions of cosine, L1, L2, inner product
+      - L1 (Manhattan/Taxi Cab)
+        - on the grid follows the grid lines and does not allow for diagonals
+          - to get from 0,0 to 5, 6 you must got 5 to the right and 6 up (or 6 up and then 5 to the right)
+      - L2 (Euclidean)
+        - allows for diagnonals
+          - to get from 0,0 to 5,6 = sqrt(5^2 * 6^2)
+        - note: interestingly this is the same equation for magnitude so both magnitude and L2 represent the same underlying concept 
+        - note: all maginitude is is the length of the line
+      - Cosine
+        - is a more complicated equation that normalizes the two points in order to have a reference between them, and putting them on the same scale, by normalize we remove information about length and focus on direction, basically measureing if a single straight line was drawn from 0,0 if it could intersect both points, this would be a score of 0
+          - for point 5,6 and 3,4 the equation would be (5 x 3 + 6 x 4) / (sqrt(5^2 + 5^) x sqrt(3^2 + 4^2))
+            - by dividing by the product of the two points magintudes we normalizes the two lines
+              - magnitude is the line length 
+              - normalization is just changing the vector's magnittude (length) to be 1, this means that if two points intersect they are actually at the same point after normalizaiton
+      - Inner product
+        - is the cosine equation without the normalization step
+        - meaning for points 5,6 and 3,4 it would be (5 x 6 + 6 x 4)
+        - note: this is contaminated by magnitude, a longer vector will produce a larger value, even if the angle is the same
+      - What each of the 4 distance functions are used for:
+        - cosine: 
+          - default for text and semantic embeeding, most models are trained to put meaning into direction not magnitude
+          - similar concepts mean similar directions from the origin, magnitude is meaningless, two similar sentences might produce very different magnitudes 
+        - inner product
+          - basically not used unless its on normalized data which means its the same as cosine at that point
+        - euclidean
+          - use this when magnitude carries meaning, raw numeric feature vectors for example, where teh actual values matter not just heir ration, also used in image embeddings
+          - ask the question does a vector twice as long mean soemthing twice as strong? if yes use this
+          - cares about both direction and length
+        - manhattan
+          - rarely used might be used in high dimensional spares spaces whereeuclidean square over penalizes large differences in single dimension
+  - pgvectorscale
+    - speds up pgvector for large scale workloads
+    - high accuracy filtered search
+  - pgai
+    - in database LLM reason (summarization,l moderation, categorization) 
+- to set up an embedding columing just have the necessary extensions installed in postgres and create a column such as embedding vector(1536)
+  - the vector data type comes from pgvector
+  - the 1536 matches the OpenAi text-embedding-3-small
+  - all values from this column will be null, in order to add to the column run
+    - ```Update table SET embedding = openai_embed('text-embedding-3-small', column_to_reference);```
+      - openai_embed come from pgai
+- 
