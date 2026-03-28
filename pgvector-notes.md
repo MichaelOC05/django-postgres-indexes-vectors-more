@@ -54,5 +54,13 @@
   - the 1536 matches the OpenAi text-embedding-3-small
   - all values from this column will be null, in order to add to the column run
     - ```Update table SET embedding = openai_embed('text-embedding-3-small', column_to_reference);```
-      - openai_embed come from pgai
-- 
+      - openai_embed come from pgai extension
+- vector serach indexes
+  - pros and cons of using pgvector and pgvectorscale
+  - when dealing with lots of vectors gets the curse of dimensionality
+    - comes about when working with data in high dimensional vector spaces 
+      - higher dimensions means more axises
+      - with higher dimensions the distance and similairty becomes meaningless, this is because the closest and farthest similar vectors are basically the same
+      - this also means that that maintaining smaple points you need a even larger dataset with 10 dimensions and 10 samples per dimension you need 10^10 points
+      - your data also ends up taking up only a very small portino of the overall space, this makes clustering, interpolation and generalization harder
+      - 
