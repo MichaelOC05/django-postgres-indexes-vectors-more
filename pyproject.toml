@@ -12,19 +12,18 @@ dependencies = [
     "psycopg>=3.2.3",
     "whitenoise>=6.8.2",
     "python-dotenv>=1.0.1",
-    "pgvector>=0.4.2",
-    "langchain>=1.2.13",
+    "pgvector==0.3.6",
     "openai>=2.29.0",
-    "pandasai>=3.0.0",
-    "pandasai-litellm>=0.0.1",
     "streamlit>=1.55.0",
     "notebook>=7.5.5",
+    "langchain-text-splitters>=1.1.1",
+    "langchain-community>=0.4.1",
+    "langchain-openai>=1.1.12",
+    "tiktoken>=0.12.0",
+    "langchain-postgres>=0.0.17",
 ]
 
 [dependency-groups]
-development = [
-    "pgvector>=0.4.2",
-]
 local = [
     "django-debug-toolbar>=4.4.6",
     "kolo>=2.34.2",
