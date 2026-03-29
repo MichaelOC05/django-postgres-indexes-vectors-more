@@ -57,10 +57,21 @@
       - openai_embed come from pgai extension
 - vector serach indexes
   - pros and cons of using pgvector and pgvectorscale
+  - with less than ~100k vectors for single index is probably not required
   - when dealing with lots of vectors gets the curse of dimensionality
     - comes about when working with data in high dimensional vector spaces 
       - higher dimensions means more axises
       - with higher dimensions the distance and similairty becomes meaningless, this is because the closest and farthest similar vectors are basically the same
       - this also means that that maintaining smaple points you need a even larger dataset with 10 dimensions and 10 samples per dimension you need 10^10 points
       - your data also ends up taking up only a very small portino of the overall space, this makes clustering, interpolation and generalization harder
-      - 
+  - IVFFlat (Inverted File with Flat compression), at index build time it clusters your vectors into list of number of groups using k-means, when queried it only searches thr groups closest clusters than all of them
+    - the data needs to be in the table before the index is built, this 
+    - k-means is dropping points that than form groups which then are moved to the cetner and all points that are closest to it are then reassigned this continues until a change does not occur
+      - theoritically possible to go infinitvely but there is usually a block
+  - HNSW (Hierarchical Navigable Small World)
+    - builds a multi-layer graph where each vector is a node connectd to its nearest neighbors
+    - allows for empty table and accepts inserts without needing to rebuild
+    - when creating can specify the number of connections per nod (higher meaning better recall but also requiring more memory)
+  - StreamingDiskANN
+    - overcomes some o fhte memory limitations of HNSW indexes by storing part of the index on disk making it more cost efficient to run 
+  
